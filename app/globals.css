@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --brand: #6EC1E4; /* lightish blue */
+  --brand-foreground: #0b3a5e;
+}
+
+body {
+  /* Let the layout control the page background (Tailwind on the body element). */
+  background: transparent;
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Dark theme base tweaks so the site visibly changes */
+html.dark body {
+  color: #e6f0ff; /* soft blue-tinted foreground */
+}
+/* Ensure the root background is dark as well */
+html.dark { background-color: #0a1f3d; }
+html { background-color: #f0f7ff; }
+/* Brand blue-leaning dark surface */
+html.dark header { background: rgba(6, 23, 61, 0.75) !important; border-color: rgba(173, 197, 255, 0.15) !important; }
+html.dark .card { background: rgba(5, 18, 45, 0.78); border-color: rgba(173, 197, 255, 0.2); }
+html.dark .socials a { background: rgba(6, 23, 61, 0.9); border-color: rgba(173, 197, 255, 0.12); }
+
+/* Override common utility combos used across pages in dark mode */
+html.dark .bg-white, 
+html.dark .bg-white\/95, 
+html.dark .bg-white\/90, 
+html.dark .bg-white\/85, 
+html.dark .bg-white\/80, 
+html.dark .hover\:bg-white:hover {
+  background-color: rgba(5, 18, 45, 0.78) !important;
+}
+/* Also diminish translucent whites */
+html.dark .bg-white\/70 { background-color: rgba(5, 18, 45, 0.6) !important; }
+html.dark .bg-white\/60 { background-color: rgba(5, 18, 45, 0.5) !important; }
+html.dark .bg-white\/50 { background-color: rgba(5, 18, 45, 0.4) !important; }
+html.dark .border-gray-200, 
+html.dark .border-gray-300, 
+html.dark .border-gray-100,
+html.dark .border-black\/5 {
+  border-color: rgba(173, 197, 255, 0.2) !important;
+}
+html.dark .text-gray-900, 
+html.dark .text-gray-800 { color: #eaf2ff !important; }
+html.dark .text-gray-700, 
+html.dark .text-gray-600 { color: #c9dbff !important; }
+html.dark .text-neutral-700 { color: #d0deff !important; }
+
+/* Sky tints used heavily on Hero */
+html.dark .bg-sky-100 { background-color: rgba(30, 58, 138, 0.35) !important; }
+html.dark .text-sky-800 { color: #bfdbfe !important; }
+html.dark .ring-sky-200 { --tw-ring-color: rgba(191, 219, 254, 0.35) !important; }
+/* extra specificity for the hero logo circle */
+html.dark .anim-float.bg-sky-100 { background-color: rgba(30, 58, 138, 0.32) !important; }
+
+/* Tailwind gradient utility variable overrides (for from-white/70, via-white/55, to-white/70) */
+html.dark .from-white\/70 { --tw-gradient-from: rgba(10, 31, 61, 0.6) !important; --tw-gradient-to: rgba(10, 31, 61, 0) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+html.dark .via-white\/55 { --tw-gradient-stops: var(--tw-gradient-from), rgba(10, 31, 61, 0.45), var(--tw-gradient-to) !important; }
+html.dark .to-white\/70   { --tw-gradient-to: rgba(10, 31, 61, 0.6) !important; }
+
+/* Buttons and pills */
+html.dark .btn-primary { background: #2563eb; color: white; }
+html.dark .btn-outline { border-color: #60a5fa; color: #bfdbfe; }
+html.dark .btn-outline:hover { background: color-mix(in oklab, #60a5fa 10%, #0a1f3d); }
+
+/* Pretty theme switch animation using View Transitions */
+@supports (view-transition-name: none) {
+  :root { view-transition-name: root; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  html.dark::view-transition-new(root) {
+    /* radial wipe from click position */
+    clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
+    animation: reveal 500ms ease-out forwards;
+  }
+  html:not(.dark)::view-transition-new(root) {
+    /* reverse when going back to light */
+    clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
+    animation: reveal 500ms ease-out forwards;
+  }
+  @keyframes reveal {
+    to { clip-path: circle(150% at var(--x, 50%) var(--y, 50%)); }
+  }
+}
+
+/* Utility-like classes without @apply (compatible with PostCSS-less setups) */
+.btn { display:inline-flex; align-items:center; justify-content:center; border-radius:0.375rem; font-size:0.875rem; font-weight:500; transition:all .2s ease; padding:0.5rem 1rem; }
+.btn:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
+.btn[disabled] { opacity:.5; pointer-events:none; }
+.btn-primary { background:var(--brand); color:white; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+.btn-primary:hover { opacity:.9; }
+.btn-outline { border:1px solid var(--brand); color:var(--brand); background:transparent; }
+.btn-outline:hover { background: color-mix(in oklab, var(--brand) 10%, white); }
+.card { border-radius:0.75rem; border:1px solid color-mix(in oklab, black 5%, transparent); background: rgba(255,255,255,0.9); box-shadow:0 1px 2px rgba(0,0,0,.04); }
+.container-base { margin-left:auto; margin-right:auto; width:100%; max-width:80rem; padding-left:1rem; padding-right:1rem; }
+@media (min-width:640px){ .container-base{ padding-left:1.5rem; padding-right:1.5rem; } }
+@media (min-width:1024px){ .container-base{ padding-left:2rem; padding-right:2rem; } }
+
+.map-container { height: 420px; width: 100%; border-radius: 0.75rem; overflow: hidden; }
+
+/* small helpers */
+.text-brand { color: var(--brand); }
+.bg-brand { background-color: var(--brand); }
+
+/* subtle float animation */
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px);} }
+.anim-float { animation: floaty 6s ease-in-out infinite; }
+
+/* simple fade-up reveal */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { animation: fadeUp .6s ease-out both; }
+.fade-in-up.delay-1 { animation-delay: .08s; }
+.fade-in-up.delay-2 { animation-delay: .16s; }
+.fade-in-up.delay-3 { animation-delay: .24s; }
+
+/* footer socials as icon pills */
+.socials { display:flex; flex-wrap:wrap; gap:.5rem; }
+.socials a { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid color-mix(in oklab, black 8%, transparent); border-radius:.5rem; background:white; box-shadow:0 1px 1px rgba(0,0,0,.04); }
+.socials--icons a svg { display:block; }
+
+/* hide ugly scrollbars on carousels (still scrollable) */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* brand custom horizontal scrollbar (used in Timeline) */
+.custom-scrollbar-x {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(2, 132, 199, 0.6) rgba(2, 27, 71, 0.08);
+}
+.custom-scrollbar-x::-webkit-scrollbar { height: 10px; }
+.custom-scrollbar-x::-webkit-scrollbar-track { background: rgba(2, 27, 71, 0.08); border-radius: 999px; }
+.custom-scrollbar-x::-webkit-scrollbar-thumb { background: rgba(2, 132, 199, 0.6); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+.custom-scrollbar-x:hover::-webkit-scrollbar-thumb { background: rgba(2, 132, 199, 0.8); }
+html.dark .custom-scrollbar-x { scrollbar-color: rgba(96, 165, 250, 0.6) rgba(8, 29, 66, 0.45); }
+html.dark .custom-scrollbar-x::-webkit-scrollbar-track { background: rgba(8, 29, 66, 0.45); }
+html.dark .custom-scrollbar-x::-webkit-scrollbar-thumb { background: rgba(96, 165, 250, 0.6); }
+
+/* masonry helpers */
+.break-avoid { break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid; }
+
+/* Ensure team page headings respect light/dark explicitly (avoid being overridden by html.dark color rules) */
+.team-heading { color: #000000; }
+.team-subtitle { color: #000000; }
+html.dark .team-heading { color: #ffffff !important; }
+html.dark .team-subtitle { color: #ffffff !important; }
+
+/* Role and modal styles for team page */
+.team-role { color: #111827; /* gray-900 */ }
+html.dark .team-role { color: #e6f0ff !important; }
+
+.bio-modal { background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 0.75rem; box-shadow: 0 8px 30px rgba(2,6,23,0.12); }
+html.dark .bio-modal { background: rgba(5,18,45,0.9) !important; border-color: rgba(173,197,255,0.08) !important; }
+.bio-modal button[aria-label] { background: transparent; border: none; font-size: 1rem; }
+
+/* Modal image sizing and content color handling */
+.bio-modal .relative.w-48.h-48 { width: 220px; height: 220px; }
+.bio-modal .content-text p { color: #111827; }
+html.dark .bio-modal .content-text p { color: #e6f0ff !important; }
+
+/* Ensure the built-in dialog close button matches theme */
+.bio-modal .radix-dialog-close, .bio-modal [data-radix-dialog-close] { color: #111827; }
+html.dark .bio-modal .radix-dialog-close, html.dark .bio-modal [data-radix-dialog-close] { color: #e6f0ff !important; }
+
+/* Left panel background for modal (theme-aware) */
+.left-panel { background: #f8fafc; }
+html.dark .left-panel { background: rgba(6,23,61,0.9) !important; }
+
+/* sr-only fallback if Tailwind not available */
+.sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+
+/*
+  Force role and bio text within team-related cards and modal to follow theme.
+  Many utilities are aggressively overridden by `html.dark` earlier in this file, so
+  we increase specificity here to ensure readable text in both modes.
+*/
+.card .text-gray-800,
+.card .text-gray-700,
+.card .line-clamp-3,
+.card .team-role,
+.line-clamp-3.text-gray-800,
+.prose.content-text,
+.prose.content-text p {
+  color: #111827; /* gray-900 / blackish for light mode */
+}
+
+html.dark .card .text-gray-800,
+html.dark .card .text-gray-700,
+html.dark .card .line-clamp-3,
+html.dark .card .team-role,
+html.dark .line-clamp-3.text-gray-800,
+html.dark .prose.content-text,
+html.dark .prose.content-text p {
+  color: #e6f0ff !important; /* readable light-on-dark */
+}
+
+/* Also ensure small role descriptions (CardDescription) inside cards follow the same rule */
+.card .text-sm { color: #111827; }
+html.dark .card .text-sm { color: #e6f0ff !important; }
+
+/* Extra high-specificity safety net for team role text inside cards.
+   Some compiled/global rules were still winning in a few environments —
+   target the exact combinations used by the Team page and Card primitives
+   and add a dark-mode counterpart. Keep scope minimal to avoid regressions.
+*/
+.card[data-component="card"] .text-sm.text-gray-800,
+.card .text-sm.text-gray-800,
+.card .text-gray-800.break-words,
+.card .team-role,
+.card .line-clamp-3,
+.card .line-clamp-3.text-gray-800 {
+  color: #111827 !important; /* force blackish color in light mode */
+}
+
+html.dark .card[data-component="card"] .text-sm.text-gray-800,
+html.dark .card .text-sm.text-gray-800,
+html.dark .card .text-gray-800.break-words,
+html.dark .card .team-role,
+html.dark .card .line-clamp-3,
+html.dark .card .line-clamp-3.text-gray-800 {
+  color: #e6f0ff !important; /* readable light-on-dark in dark mode */
+}
