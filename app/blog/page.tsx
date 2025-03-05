@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 
 import Header from "@/components/Header";
 import Footer from '@/components/Footer';
+import ContentTabs from '@/components/ContentTabs';
 
 interface Post {
   id: string;
@@ -82,13 +83,15 @@ const BlogPage = () => {
       <ScrollArea className="min-h-screen bg-gradient-to-r from-[#4facfe] to-[#00f2fe] pt-20">
         <div className="container max-w-[1400px] mx-auto px-6 py-24">
           <div className="space-y-16">
-            <div className="text-center space-y-6 max-w-3xl mx-auto">
+            <div className="text-center space-y-10 max-w-3xl mx-auto">
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-sm">
                 Hey, Blue! Blog
               </h1>
               <p className="text-xl md:text-2xl text-white/90 font-medium">
                 Discover our latest stories and insights
               </p>
+              
+              <ContentTabs />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
