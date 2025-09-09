@@ -17,12 +17,6 @@
 /.next/
 /out/
 
-# Ignore API endpoints
-app/api/
-
-# Ignore team data
-public/data/team/
-
 # production
 /build
 
@@ -45,3 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+app/api/
